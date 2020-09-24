@@ -1,3 +1,4 @@
+import cookieSession from 'cookie-session';
 import { json } from 'body-parser';
 import { currentUser } from '../routes/currentUser';
 import { signIn } from '../routes/signIn';
@@ -7,7 +8,9 @@ import { errorHandler } from '../middlewares/errorHandler';
 import { notFound } from '../routes/notFound';
 
 const routing = (app: any) => {
+  app.set('trust proxy', true);
   app.use(json());
+  app.use(cookieSession({ signed: false, secure: true }));
 
   app.use('/api/users/currentuser', currentUser);
   app.use('/api/users/signout', signOut);

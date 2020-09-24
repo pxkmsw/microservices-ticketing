@@ -1,0 +1,52 @@
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:24.091Z'
+}
+{
+  message: 'Listening on port 3000 ....',
+  level: '\u001b[32minfo\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:24.096Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:48.248Z'
+}
+{
+  message: 'Listening on port 3000 ....',
+  level: '\u001b[32minfo\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:48.253Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:10.719Z'
+}
+{
+  message: 'Listening on port 3000 ....',
+  level: '\u001b[32minfo\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:10.724Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:28.434Z'
+}
+{
+  message: 'Listening on port 3000 ....',
+  level: '\u001b[32minfo\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:28.439Z'
+}
+2020-09-24T20:55:50.382Z [31merror[39m: errorHandler ==> CustomError thrown: Config not found.
+2020-09-24T20:55:50.388Z [32minfo[39m: Listening on port 3000 ....
+2020-09-24T20:59:04.168Z [31merror[39m: errorHandler ==> CustomError thrown: Config not found.
+2020-09-24T20:59:04.174Z [32minfo[39m: Listening on port 3000 ....

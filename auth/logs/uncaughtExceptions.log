@@ -1,0 +1,208 @@
+{
+  error: DatabaseConnectionError: Error connecting to db
+      at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)
+      at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)
+      at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11
+      at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)
+      at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)
+      at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65) {
+    msg: undefined,
+    statusCode: 500,
+    reason: 'Error connecting to database',
+    serializeErrors: [Function]
+  },
+  level: '\u001b[31merror\u001b[39m',
+  message: 'uncaughtException: Error connecting to db\n' +
+    'Error: Error connecting to db\n' +
+    '    at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)\n' +
+    '    at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)\n' +
+    '    at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11\n' +
+    '    at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)\n' +
+    '    at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)\n' +
+    '    at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65)',
+  stack: 'Error: Error connecting to db\n' +
+    '    at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)\n' +
+    '    at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)\n' +
+    '    at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11\n' +
+    '    at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)\n' +
+    '    at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)\n' +
+    '    at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65)',
+  exception: true,
+  date: 'Thu Sep 24 2020 22:42:58 GMT+0200 (Central European Summer Time)',
+  process: {
+    pid: 18376,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth',
+    execPath: '/usr/local/bin/node',
+    version: 'v12.18.2',
+    argv: [ '/usr/local/bin/node', 'src/index.ts' ],
+    memoryUsage: {
+      rss: 49938432,
+      heapTotal: 21598208,
+      heapUsed: 19751320,
+      external: 19752739,
+      arrayBuffers: 18279630
+    }
+  },
+  os: {
+    loadavg: [ 2.53369140625, 2.564453125, 2.50732421875 ],
+    uptime: 3747111
+  },
+  trace: [
+    {
+      column: 5,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts',
+      function: 'DatabaseConnectionError.CustomError',
+      line: 5,
+      method: 'CustomError',
+      native: false
+    },
+    {
+      column: 5,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts',
+      function: 'new DatabaseConnectionError',
+      line: 8,
+      method: null,
+      native: false
+    },
+    {
+      column: 11,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: null,
+      line: 14,
+      method: null,
+      native: false
+    },
+    {
+      column: 23,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'step',
+      line: 33,
+      method: null,
+      native: false
+    },
+    {
+      column: 53,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'Object.throw',
+      line: 14,
+      method: 'throw',
+      native: false
+    },
+    {
+      column: 65,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'rejected',
+      line: 6,
+      method: null,
+      native: false
+    }
+  ],
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:42:59.014Z'
+}
+{
+  error: DatabaseConnectionError: Error connecting to db
+      at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)
+      at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)
+      at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11
+      at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)
+      at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)
+      at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65) {
+    msg: undefined,
+    statusCode: 500,
+    reason: 'Error connecting to database',
+    serializeErrors: [Function]
+  },
+  level: '\u001b[31merror\u001b[39m',
+  message: 'uncaughtException: Error connecting to db\n' +
+    'Error: Error connecting to db\n' +
+    '    at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)\n' +
+    '    at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)\n' +
+    '    at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11\n' +
+    '    at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)\n' +
+    '    at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)\n' +
+    '    at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65)',
+  stack: 'Error: Error connecting to db\n' +
+    '    at DatabaseConnectionError.CustomError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts:5:5)\n' +
+    '    at new DatabaseConnectionError (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts:8:5)\n' +
+    '    at /Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:11\n' +
+    '    at step (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:33:23)\n' +
+    '    at Object.throw (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:14:53)\n' +
+    '    at rejected (/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts:6:65)',
+  exception: true,
+  date: 'Thu Sep 24 2020 22:43:53 GMT+0200 (Central European Summer Time)',
+  process: {
+    pid: 18408,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth',
+    execPath: '/usr/local/bin/node',
+    version: 'v12.18.2',
+    argv: [ '/usr/local/bin/node', 'src/index.ts' ],
+    memoryUsage: {
+      rss: 51150848,
+      heapTotal: 22384640,
+      heapUsed: 19863616,
+      external: 19752739,
+      arrayBuffers: 18279630
+    }
+  },
+  os: {
+    loadavg: [ 1.93212890625, 2.40234375, 2.4501953125 ],
+    uptime: 3747165
+  },
+  trace: [
+    {
+      column: 5,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/customError.ts',
+      function: 'DatabaseConnectionError.CustomError',
+      line: 5,
+      method: 'CustomError',
+      native: false
+    },
+    {
+      column: 5,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/errors/databaseConnectionError.ts',
+      function: 'new DatabaseConnectionError',
+      line: 8,
+      method: null,
+      native: false
+    },
+    {
+      column: 11,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: null,
+      line: 14,
+      method: null,
+      native: false
+    },
+    {
+      column: 23,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'step',
+      line: 33,
+      method: null,
+      native: false
+    },
+    {
+      column: 53,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'Object.throw',
+      line: 14,
+      method: 'throw',
+      native: false
+    },
+    {
+      column: 65,
+      file: '/Users/daniel/Documents/software/projects/microservices-ticketing/auth/src/startup/database.ts',
+      function: 'rejected',
+      line: 6,
+      method: null,
+      native: false
+    }
+  ],
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:43:53.198Z'
+}

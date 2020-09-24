@@ -1,0 +1,26 @@
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:24.091Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:47:48.248Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:10.719Z'
+}
+{
+  message: 'errorHandler ==> CustomError thrown: Config not found.',
+  level: '\u001b[31merror\u001b[39m',
+  label: 'right meow!',
+  timestamp: '2020-09-24T20:48:28.434Z'
+}
+2020-09-24T20:55:50.382Z [31merror[39m: errorHandler ==> CustomError thrown: Config not found.
+2020-09-24T20:59:04.168Z [31merror[39m: errorHandler ==> CustomError thrown: Config not found.
