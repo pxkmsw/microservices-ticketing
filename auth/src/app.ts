@@ -2,8 +2,7 @@ require('express-async-errors');
 import express from 'express';
 import { config } from './startup/config';
 import { routing } from './startup/routes';
-import { CustomError } from './errors/customError';
-import { logger } from './startup/logger';
+import { CustomError, logger } from '@fullstackeng/common';
 
 const app = express();
 

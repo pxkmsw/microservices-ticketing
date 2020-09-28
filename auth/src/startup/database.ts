@@ -1,6 +1,5 @@
-import { DatabaseConnectionError } from '../errors/databaseConnectionError';
+import { DatabaseConnectionError, logger } from '@fullstackeng/common';
 import mongoose from 'mongoose';
-import { logger } from './logger';
 
 export const dbConnect = async () => {
   try {

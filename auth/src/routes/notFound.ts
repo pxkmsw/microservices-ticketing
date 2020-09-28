@@ -1,5 +1,5 @@
 import express from 'express';
-import { NotFoundError } from '../errors/notFoundError';
+import { NotFoundError } from '@fullstackeng/common';
 
 const router = express.Router();
 

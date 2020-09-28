@@ -1,5 +1,5 @@
 import configlib from 'config';
-import { ConfigError } from '../errors/configError';
+import { ConfigError } from '@fullstackeng/common';
 
 export const config = function () {
   if (!configlib.get('jwtPrivateKey')) {

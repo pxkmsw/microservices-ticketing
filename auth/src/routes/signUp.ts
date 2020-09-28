@@ -1,11 +1,9 @@
 import express, { Request, Response } from 'express';
-import { BadRequestError } from '../errors/badRequestError';
-import { validateRequest } from '../middlewares/validateRequest';
+import { BadRequestError, validateRequest, logger } from '@fullstackeng/common';
 import { UserEntity } from '../models/entities/userEntity';
 import { body } from 'express-validator';
 import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
-import { logger } from '../startup/logger';
 
 const router = express.Router();
 

@@ -4,7 +4,7 @@ import { currentUser } from '../routes/currentUser';
 import { signIn } from '../routes/signIn';
 import { signUp } from '../routes/signUp';
 import { signOut } from '../routes/signOut';
-import { errorHandler } from '../middlewares/errorHandler';
+import { errorHandler } from '@fullstackeng/common';
 import { notFound } from '../routes/notFound';
 
 const routing = (app: any) => {

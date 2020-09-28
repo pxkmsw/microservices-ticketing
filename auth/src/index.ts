@@ -1,6 +1,6 @@
 import { app } from './app';
 import { dbConnect } from './startup/database';
-import { logger } from './startup/logger';
+import { logger } from '@fullstackeng/common';
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
