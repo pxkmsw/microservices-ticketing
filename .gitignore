@@ -1,3 +1,4 @@
 node_modules/
 common/.git/
+common/.gitignore
 ticketing-dev-b79e3bc2e0cd.json

@@ -9,4 +9,8 @@ export const config = function () {
   if (!process.env.JWT_KEY) {
     throw new ConfigError('FATAL ERROR: JWT_KEY is not defined.');
   }
+
+  if (!process.env.MONGO_URI) {
+    throw new ConfigError('FATAL ERROR: MONGO_URI is not defined.');
+  }
 };
