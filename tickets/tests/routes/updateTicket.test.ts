@@ -1,6 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../../src/app';
+import { natsWrapper } from '../../src/natsWrapper';
 
 describe('update ticket', () => {
   it('returns a 401 if the user is not authenticated', async () => {
@@ -68,5 +69,22 @@ describe('update ticket', () => {
 
     expect(updatedTicket.body.title).toEqual('c');
     expect(updatedTicket.body.price).toEqual(2);
+  });
+
+  it('publishes an event', async () => {
+    const cookie = global.signup();
+    const response = await request(app)
+      .post(`/api/tickets`)
+      .set('Cookie', cookie)
+      .send({ title: 'a', price: 1 });
+
+    const id = response.body.id;
+    await request(app)
+      .put(`/api/tickets/${id}`)
+      .set('Cookie', cookie)
+      .send({ title: 'c', price: 2 })
+      .expect(200);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
   });
 });

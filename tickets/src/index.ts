@@ -1,10 +1,12 @@
 import { app } from './app';
 import { dbConnect } from './startup/database';
+import { natsConnect } from './startup/nats';
 import { logger } from '@fullstackeng/common';
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   try {
+    natsConnect();
     dbConnect();
   } catch (e: any) {
     for (let err of e.serializeErrors())
