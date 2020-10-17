@@ -17,7 +17,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
+          - src: 'src/**/*.ts'
             dest: .
     - image: us.gcr.io/ticketing-dev-289619/client
       # - image: danieldotinc/client
@@ -26,7 +26,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "**/*.jsx"
+          - src: '**/*.jsx'
             dest: .
     - image: us.gcr.io/ticketing-dev-289619/tickets
       # - image: danieldotinc/tickets
@@ -35,5 +35,14 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/ticketing-dev-289619/orders
+      # - image: danieldotinc/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .
