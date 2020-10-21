@@ -1,10 +1,22 @@
 import mongoose from 'mongoose';
-import { TicketInfo } from './entities/ticketEntity';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
-interface TicketDoc extends mongoose.Document, TicketInfo {}
+interface TicketAttrs {
+  title: string;
+  price: number;
+  userId: string;
+}
+
+interface TicketDoc extends mongoose.Document {
+  title: string;
+  price: number;
+  userId: string;
+  orderId?: string;
+  version: number;
+}
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
-  build(ticketInfo: TicketInfo): TicketDoc;
+  build(ticketInfo: TicketAttrs): TicketDoc;
 }
 
 const ticketSchema = new mongoose.Schema(
@@ -21,18 +33,24 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    orderId: {
+      type: String,
+    },
   },
   {
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
-        delete ret.__v;
+        delete ret._id;
       },
     },
   }
 );
 
-ticketSchema.statics.build = (attrs: TicketInfo) => {
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
+
+ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
 };
 

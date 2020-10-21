@@ -1,11 +1,25 @@
 import { eOrderStatus } from '@fullstackeng/common';
 import mongoose from 'mongoose';
-import { OrderInfo } from './entities/orderEntity';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { TicketDoc } from './ticket';
 
-interface OrderDoc extends mongoose.Document, OrderInfo {}
+interface OrderAttrs {
+  userId: string;
+  status: eOrderStatus;
+  expiresAt: Date;
+  ticket: TicketDoc;
+}
+
+interface OrderDoc extends mongoose.Document {
+  userId: string;
+  version: number;
+  status: eOrderStatus;
+  expiresAt: Date;
+  ticket: TicketDoc;
+}
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
-  build(orderInfo: OrderInfo): OrderDoc;
+  build(orderInfo: OrderAttrs): OrderDoc;
 }
 
 const orderSchema = new mongoose.Schema(
@@ -38,7 +52,10 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-orderSchema.statics.build = (attrs: OrderInfo) => {
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
+
+orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
 

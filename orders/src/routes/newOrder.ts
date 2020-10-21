@@ -9,7 +9,6 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import mongoose from 'mongoose';
 import { OrderCreatedPublisher } from '../events/publishers/orderCreatedPublisher';
-import { OrderEntity } from '../models/entities/orderEntity';
 import { Order } from '../models/order';
 import { Ticket } from '../models/ticket';
 import { natsWrapper } from '../natsWrapper';
@@ -40,19 +39,19 @@ router.post(
     const expiresAt = new Date();
     expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
-    const orderEntity = new OrderEntity({
+    const order = Order.build({
       userId: req.currentUser!.id,
       status: eOrderStatus.Created,
       expiresAt,
       ticket,
     });
-    const order = Order.build(orderEntity.getOrderInfo());
     await order.save();
 
-    const { id, status, userId } = order;
+    const { id, version, status, userId } = order;
     const ticketInfo = { id: ticket.id, price: ticket.price };
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id,
+      version,
       status,
       userId,
       expiresAt: expiresAt.toISOString(),

@@ -2,11 +2,7 @@ import request from 'supertest';
 import { app } from '../../src/app';
 
 const createTicket = () =>
-  request(app)
-    .post('/api/tickets')
-    .set('Cookie', global.signup())
-    .send({ title: 'concert', price: 120 })
-    .expect(201);
+  request(app).post('/api/tickets').set('Cookie', global.signup()).send({ title: 'concert', price: 120 }).expect(201);
 
 describe('retrieves tickets', () => {
   it('returns the list of tickets', async () => {

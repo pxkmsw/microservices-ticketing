@@ -16,7 +16,11 @@ describe('Handles the creation of a new order', () => {
   });
 
   it('returns an error if the ticket is already reserved', async () => {
-    const ticket = await Ticket.build({ title: 'concert', price: 20 });
+    const ticket = await Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
+      title: 'concert',
+      price: 20,
+    });
     await ticket.save();
 
     const order = Order.build({
@@ -36,7 +40,11 @@ describe('Handles the creation of a new order', () => {
   });
 
   it('reserves a ticket', async () => {
-    const ticket = await Ticket.build({ title: 'concert', price: 20 });
+    const ticket = await Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
+      title: 'concert',
+      price: 20,
+    });
     await ticket.save();
     await request(app)
       .post('/api/orders')
@@ -46,7 +54,11 @@ describe('Handles the creation of a new order', () => {
   });
 
   it('emits an order created event', async () => {
-    const ticket = await Ticket.build({ title: 'concert', price: 20 });
+    const ticket = await Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
+      title: 'concert',
+      price: 20,
+    });
     await ticket.save();
     await request(app)
       .post('/api/orders')

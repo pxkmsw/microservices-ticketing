@@ -1,9 +1,4 @@
-import {
-  NotAuthorizedError,
-  NotFoundError,
-  requireAuth,
-  validateRequest,
-} from '@fullstackeng/common';
+import { BadRequestError, NotAuthorizedError, NotFoundError, requireAuth, validateRequest } from '@fullstackeng/common';
 import { body } from 'express-validator';
 import express, { Request, Response } from 'express';
 import { Ticket } from '../models/ticket';
@@ -25,6 +20,7 @@ router.put(
     if (!ticket) throw new NotFoundError();
 
     if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
+    if (ticket.orderId) throw new BadRequestError('Can not edit a reserved ticket');
 
     // const updatedTicket = await Ticket.updateOne({ _id: ticket.id }, req.body);
     ticket.set({ title: req.body.title, price: req.body.price });
@@ -32,6 +28,7 @@ router.put(
 
     await new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
+      version: ticket.version!,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,

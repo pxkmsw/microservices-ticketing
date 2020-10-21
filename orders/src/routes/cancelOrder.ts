@@ -15,7 +15,8 @@ router.patch('/:id', requireAuth, async (req: Request, res: Response) => {
 
   new OrderCancelledPublisher(natsWrapper.client).publish({
     id: order.id,
-    ticket: { id: order.ticket.id! },
+    version: order.version,
+    ticket: { id: order.ticket.id },
   });
 
   res.status(204).send(order);

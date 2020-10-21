@@ -12,7 +12,7 @@ export abstract class BaseListener<T extends Event> {
   abstract queueGroupName: string;
   protected ackWait = 5 * 1000;
 
-  constructor(private client: Stan) {}
+  constructor(protected client: Stan) {}
   abstract onMessage(data: T['data'], msg: Message): void;
 
   subscriptionOptions(): SubscriptionOptions {

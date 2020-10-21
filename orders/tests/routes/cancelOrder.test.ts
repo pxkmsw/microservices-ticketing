@@ -1,4 +1,5 @@
 import { eOrderStatus } from '@fullstackeng/common';
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../src/app';
 import { Order } from '../../src/models/order';
@@ -6,7 +7,11 @@ import { Ticket } from '../../src/models/ticket';
 import { natsWrapper } from '../../src/natsWrapper';
 
 const buildTicket = async () => {
-  const ticket = await Ticket.build({ title: 'concert', price: 20 });
+  const ticket = await Ticket.build({
+    id: mongoose.Types.ObjectId().toHexString(),
+    title: 'concert',
+    price: 20,
+  });
   await ticket.save();
   return ticket;
 };

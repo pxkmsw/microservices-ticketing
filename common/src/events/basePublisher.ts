@@ -9,7 +9,7 @@ interface Event {
 
 export abstract class BasePublisher<T extends Event> {
   abstract readonly subject: T['subject'];
-  constructor(private client: Stan) {}
+  constructor(protected client: Stan) {}
 
   publish(data: T['data']): Promise<void> {
     return new Promise((resolve, reject) => {
