@@ -1,10 +1,4 @@
-import {
-  BadRequestError,
-  eOrderStatus,
-  NotFoundError,
-  requireAuth,
-  validateRequest,
-} from '@fullstackeng/common';
+import { BadRequestError, eOrderStatus, NotFoundError, requireAuth, validateRequest } from '@fullstackeng/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import mongoose from 'mongoose';
@@ -14,7 +8,7 @@ import { Ticket } from '../models/ticket';
 import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post(
   '/',

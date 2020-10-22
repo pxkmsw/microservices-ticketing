@@ -1,7 +1,5 @@
 import { NATSConnectionError, logger } from '@fullstackeng/common';
-import { ExpirationCompleteListener } from '../events/listeners/expirationCompleteListener';
-import { TicketCreatedListener } from '../events/listeners/ticketCreatedListener';
-import { TicketUpdatedListener } from '../events/listeners/ticketUpdatedListener';
+import { OrderCreatedListener } from '../events/listeners/orderCreatedListener';
 import { natsWrapper } from '../natsWrapper';
 
 export const natsConnect = async () => {
@@ -17,9 +15,7 @@ export const natsConnect = async () => {
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
 
-    new TicketCreatedListener(natsWrapper.client).listen();
-    new TicketUpdatedListener(natsWrapper.client).listen();
-    new ExpirationCompleteListener(natsWrapper.client).listen();
+    new OrderCreatedListener(natsWrapper.client).listen();
   } catch (err) {
     throw new NATSConnectionError();
   }
