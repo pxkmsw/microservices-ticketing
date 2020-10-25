@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 import { Password } from '../tools/password';
 import { UserInfo } from './entities/userEntity';
 
@@ -33,7 +34,9 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
-    const hashedPass = await Password.hash(this.get('password'));
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(this.get('password'), salt);
+    // const hashedPass = await Password.hash(this.get('password'));
     this.set('password', hashedPass);
   }
   done();

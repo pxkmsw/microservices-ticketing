@@ -11,7 +11,7 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   }
 
   logger.error('errorHandler ==> Unknown error thrown: ' + err.message);
-  logger.error('errorHandler ==> errobj: ' + JSON.stringify(err));
+  console.log(err);
   res.status(400).send({
     errors: [{ message: 'Something went wrong' }],
   });
