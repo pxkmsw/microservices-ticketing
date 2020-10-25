@@ -10,7 +10,7 @@ import { cancelOrder } from '../routes/cancelOrder';
 const routing = (app: any) => {
   app.set('trust proxy', true);
   app.use(json());
-  app.use(cookieSession({ signed: false, secure: process.env.NODE_ENV != 'test' }));
+  app.use(cookieSession({ signed: false, secure: false }));
   app.use(currentUser);
 
   app.use('/api/orders', getOrder);
