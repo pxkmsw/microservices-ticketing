@@ -1,9 +1,7 @@
 import buildClient from '../api/buildClient';
 
 const index = ({ currentUser }) => {
-  return (
-    <h1 className="container">{currentUser ? 'You are signed in.' : 'You are not signed in.'}</h1>
-  );
+  return <h2 className="container">{currentUser ? 'You are signed in.' : 'You are not signed in.'}</h2>;
 };
 
 index.getInitialProps = async context => {

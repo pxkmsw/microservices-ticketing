@@ -5,7 +5,7 @@ import { natsWrapper } from '../natsWrapper';
 export const natsConnect = async () => {
   try {
     await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!);
-    logger.info('Connected to NATS ...');
+    logger.info('Connected to NATS ......');
 
     natsWrapper.client.on('close', () => {
       logger.info('NATS connecton closed!');
