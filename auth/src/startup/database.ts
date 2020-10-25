@@ -8,7 +8,7 @@ export const dbConnect = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    logger.info('Connected to MongoDB ...');
+    logger.info('Connected to MongoDB .....');
   } catch (err) {
     throw new DatabaseConnectionError();
   }
