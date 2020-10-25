@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: orders
-          image: us.gcr.io/ticketing-dev-289619/orders
-          # image: danieldotinc/orders
+          # image: us.gcr.io/ticketing-dev-289619/orders
+          image: danieldotinc/orders
           # resources:
           #   limits:
           #     memory: '128Mi'

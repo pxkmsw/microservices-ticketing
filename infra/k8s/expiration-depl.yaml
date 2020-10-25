@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: expiration
-          image: us.gcr.io/ticketing-dev-289619/expiration
-          # image: danieldotinc/expiration
+          # image: us.gcr.io/ticketing-dev-289619/expiration
+          image: danieldotinc/expiration
           # resources:
           #   limits:
           #     memory: '128Mi'

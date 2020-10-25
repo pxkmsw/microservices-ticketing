@@ -14,17 +14,17 @@ spec:
     spec:
       containers:
         - name: auth
-          image: us.gcr.io/ticketing-dev-289619/auth
-          # image: danieldotinc/auth
+          # image: us.gcr.io/ticketing-dev-289619/auth
+          image: danieldotinc/auth
           # resources:
           #   limits:
           #     memory: '128Mi'
           #     cpu: '500m'
           env:
             - name: MONGO_URI
-              value: "mongodb://auth-mongo-srv:27017/auth"
+              value: 'mongodb://auth-mongo-srv:27017/auth'
             - name: JWT_KEY
-              value: "asdf"
+              value: 'asdf'
             # - name: JWT_KEY
             #   valueFrom:
             #     secretKeyRef:

@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: tickets
-          image: us.gcr.io/ticketing-dev-289619/tickets
-          # image: danieldotinc/tickets
+          # image: us.gcr.io/ticketing-dev-289619/tickets
+          image: danieldotinc/tickets
           # resources:
           #   limits:
           #     memory: '128Mi'

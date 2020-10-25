@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: client
-          image: us.gcr.io/ticketing-dev-289619/client
-          # image: danieldotinc/client
+          # image: us.gcr.io/ticketing-dev-289619/client
+          image: danieldotinc/client
           # resources:
           #   limits:
           #     memory: '128Mi'
