@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import routes from './routes';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { getCurrentUser } from './services/authService';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import './App.css';
@@ -16,7 +17,7 @@ import Bugs2 from './components/redux/reactReduxFunc/Bugs2';
 
 class App extends Component {
   render() {
-    const user = auth.getCurrentUser();
+    const user = getCurrentUser();
 
     return (
       <div className="App">
