@@ -11,7 +11,7 @@ const api = ({ dispatch }) => next => async action => {
 
   try {
     const response = await axios.request({
-      baseURL: 'http://localhost:9001/api',
+      baseURL: 'http://www.ticketing-dev-micro.xyz/api/bugs',
       url,
       method,
       data,
