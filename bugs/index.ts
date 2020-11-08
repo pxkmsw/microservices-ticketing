@@ -1,12 +1,12 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
+const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const bugs = [
+const bugs: any[] = [
   { id: 1, description: 'Bug 1', userId: 1, resolved: true },
   { id: 2, description: 'Bug 2', userId: 1 },
   { id: 3, description: 'Bug 3', userId: 2 },
@@ -34,5 +34,5 @@ app.patch('/api/bugs/:id', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('Node server started on port 9001.');
+  console.log('Node server started on port 3000.');
 });
