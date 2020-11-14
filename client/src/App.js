@@ -8,6 +8,7 @@ import './App.css';
 import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
 import Signout from './components/auth/Signout';
+import NewTicket from './components/NewTicket';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
 
@@ -31,6 +32,7 @@ class App extends Component {
           <Route path="/Signin" component={Signin} />
           <Route path="/Signup" component={Signup} />
           <Route path="/Signout" component={Signout} />
+          <Route path="/New-Ticket" component={NewTicket} />
           <Redirect from="/" to="/Dashboard" />
         </Switch>
       </div>
