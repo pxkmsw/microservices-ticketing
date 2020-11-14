@@ -5,7 +5,7 @@
   "homepage": ".",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --poll index.ts"
+    "start": "ts-node-dev --poll src/index.ts"
   },
   "author": "Daniel Daneshi",
   "license": "ISC",

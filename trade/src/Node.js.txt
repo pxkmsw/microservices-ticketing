@@ -1,0 +1,1941 @@
+-------------------------------------------------------------------------------------------------------------------------------------
+---------Node Course by Mosh Hamedani--------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+=====================================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------- Usefull installs for react ------------------------
+=====================================================================================================================================
+
+
+npm i {
+	create-react-app ----------------- create a react application
+	react-router-dom ----------------- BrowserRouter, Switch, Route, Redirect, Link, NavLink
+	prop-types ----------------------- type checking in components. Component.propTypes = {...}
+	lodash --------------------------- orderBy, ....
+	bootstrap ------------------------ CSS framework
+	font-awesome --------------------- icons
+	jquery --------------------------- $
+	axios ---------------------------- http requests: get, post, put, delete, async, await, Promise...
+	query-string --------------------- parse parameters in url
+	uuid ----------------------------- random id generator
+	react-toastify ------------------- making animated toasts
+}
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------- npm basic commands --------------------------
+===============================================================================================================================
+
+
+npm start -------------------------------- start hot server for react app
+ctrl + c --------------------------------- stop node from running
+
+npm i bootstrap -------------------------- install a package
+npm un bootstrap ------------------------- unistall a package
+npm i -g bootstrap ----------------------- install a package globally (not just for this application)
+npm un -g bootstrap ---------------------- unistall a packaget globally
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- Install Node Package -------------------------
+===============================================================================================================================
+
+
+npm init ------------------------- build package.json
+npm i ---------------------------- install package.json versions of node_modules
+npm outdated --------------------- list of outdated packages
+npm -g outdated ------------------ list of global outdated packages
+npm update ----------------------- updates node packages
+npm -g update -------------------- update global node packages
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- Updating Node Packages -----------------------
+===============================================================================================================================
+
+
+npm i -g npm-check-updates
+ncu -------------------- see all the outdated packages and their updates
+ncu -u ----------------- upgrade package.json
+npm i ------------------ update to latest version of packages
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- Install devDependencies ----------------------
+===============================================================================================================================
+
+
+npm i jshint --save-dev --------------------------- install development dependencies that should not go in production 
+							environment.
+
+---------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------- Create & Publish & Update a npm package -----
+
+
+1- mkdir mypackagename ------------------- create a directory with your package name
+2- cd mypackagename ---------------------- go to that directory
+3- npm init --yes ------------------------ create a package.json
+
+4- Then you add your exported functions to an index.js file
+	in index.js -> module.exports.add = function(a,b) {return a+b};
+
+5- npm adduser/login --------------------- go to npmjs.com and login or register
+6- add your info
+
+7- npm publish --------------------------- publish your package
+
+8- install it and use it in your application (npm i mypackagename....require('./mypackagename')...)
+9- version 3.14.6 => Major.Minor.Patch {Major: new version with breaking changes,
+					Minor: new feature with no breaking changes, Patch: bug fixes}
+
+10- if you changed your package and add a 'new feature' for example you can update your package as follows:
+
+11- npm version minor -------------- it add a new minor (1.0.0 -> 1.1.0)
+12- npm publish -------------------- publish new version
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- Environment Variables ------------------------
+===============================================================================================================================
+
+
+To Use an environment variable:
+
+	const port = process.env.PORT || 3000;
+	
+	app.listen(port);
+
+- This is how you can tell if your code is running on a development, testing, staging or production machine:
+	
+	if(app.get('env') = 'development'){
+
+		console.log('we are on development environment...');
+
+	}
+
+To set an environment variable in command line:
+
+	set PORT = 5000
+
+	set NODE_ENV = production
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- Route & queryString Parameters ---------------
+===============================================================================================================================
+
+
+	app.get('/api/posts/:year/:month', (req, res) => {
+	
+		res.send(req.params.year);
+		res.send(req.query.sortBy);
+	})
+
+-We use route parameters for essential or requaired values, and we use query string parameters for anything that is 
+optional.
+
+	app.get('/api/courses/:id', (req, res)=> {
+	
+		const course = courses.find(c => c.id === parseInt(req.params.id));
+
+		if(!course) res.status(404).send('The course with the given id was not found.');
+
+		res.send(course);
+	});
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------- RestFull api using express ------------------
+===============================================================================================================================
+
+in command line:
+
+	npm i express
+
+in index.js:
+
+	const express = require('express');
+
+	const app = express();
+
+	app.use(express.json());
+
+	const courses = [{id:1, name: 'course1'}, {id:2, name: 'course2'}, {id:3, name: 'course3'}];
+
+	app.get('/', (req, res) => { res.send('Hello World'); });
+
+	app.get('/api/courses', (req, res) => { res.send(courses) } );
+
+	app.post('/api/courses', (req, res) => { const course = { id: sth, name: req.body.name }; 
+							courses.push(course); res.send(course) } );
+
+in chrome Postman extension test the api:
+	
+	1- type > POST,
+	2- body > row,
+	3- body > type > JSON 
+	4- bydy > { "name": "New Course" }
+	5- Send
+	6- see response request by scroll down
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------- Handling  Http Requests -------------------
+===============================================================================================================================
+
+
+	app.put('/api/courses/:id', (req, res) => { 
+
+
+		// Look up the course
+		// if not existing return 404 - Not found
+		
+		const course = courses.find(c => c.id === parseInt(req.params.id));
+
+		if(!course) res.status(404).send('The course with the given id was not found.');
+
+
+
+		// Validate
+		// if invalid, return 400 - Bad Request
+
+		if ( !req.body.name && req.body.length < 3 ){ 
+			
+			res.status(400).send('The name is required and must be at least 3 characters.');
+			
+			return;
+		}
+		
+
+		// Update the course
+	
+		course.name = req.body.name;
+		
+		course.sth = req.body.sth;
+
+
+		
+		// Return the updated course
+		
+		res.send(course);
+	
+	});
+
+
+	app.delete('/api/courses/:id', (req, res) => { 
+
+
+		// Look up the course
+		// if not existing return 404 - Not found
+		
+		const course = courses.find(c => c.id === parseInt(req.params.id));
+
+		if(!course) return res.status(404).send('The course with the given id was not found.');
+		
+
+		// Delete the course
+	
+		const index = courses.indexOf(course);
+		
+		courses.splice( index, 1);
+
+
+		
+		// Return the deleted course
+		
+		res.send(course);
+	
+	});
+
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------- Midleware functions ---------------
+===============================================================================================================================
+
+
+-Every route handler function that we have is technically a middleware function.
+
+-app.use(express.json()); ==> express.json() is a middleware function. It reads the requests and if there is a json
+	object in the body of the request, it will parse the body of request into a json object, and it will set the
+	req.body property.
+
+-Express has some built in middleware functions, but we can use our own custom middleware functions that we can put at
+	at the front of our request processing pipeline. So every request that we get from the server will go through 
+	our middleware function. with these custom middleware functions we can perform cross cutting concerns. we can 
+	do logging, authentication, authorization ...
+
+-An express application is nothing but a bunch of middleware functions
+
+
+	app.use(express.json());
+
+	app.use(function(req,res,next){
+		
+		console.log('logging...');
+		
+		next();	
+	})
+
+
+	app.use(function(req,res,next){
+		
+		console.log('Authenticating...');
+		
+		next();	
+	})
+
+
+-We can store our middleware functions in different modules for cleaner code:
+
+
+	in authenticate.js:
+
+	
+		function auth(req, res, next){
+		
+			console.log('Authenticating...');
+		
+			next();	
+		})
+
+		module.export = auth;
+
+	
+	in index.js:
+		
+		.
+		.
+		.
+		
+		const app = express();
+		
+		const auth = require('./authenticate.js');
+		
+		.
+		.
+		.
+		
+		app.use(auth);
+		
+
+
+- express.urlencoded() ==> this built-in middleware function can read 'key=sth&value=sth' that is encoded in url
+	and parse it as a json object into req.body
+
+- express.static('ppublic') ==> with this middleware we can serve static content.
+
+- we can put all of our middleware function in a directory name 'middleware' and require them in our application.
+
+
+
+=====================================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------ Confiuguration ---------------------------
+=====================================================================================================================================
+
+- You should never use your confidential information like admin passwords or JSON web token private keys in your code base, otherwise these information is visible to anyone who has access to your source code.
+
+
+- Use config module to store confidential info about your application in your environment variables.
+
+
+1- create config folder in src folder.
+
+2- create default.json & development.json & production.json & custom-environment-variables.json files.
+
+3- install config package ==> npm i config
+
+4- in command line:
+	
+	set app_password=1234
+
+5- in development.json :
+
+	{
+		"name": "Express App",
+		"mail": {
+				"server": "mail-server"
+			}
+	}
+
+6- in custom-environment-variables.json:
+		
+	{
+		"mail": {
+				"password": "app_password"
+			}
+	}		
+
+
+
+7- use it in index.js:
+
+	const config = require('config');
+
+	const appname = config.get('appname');
+	const mailPassword = config.get('mail.password');
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------- Debugging ----------------------
+===============================================================================================================================
+
+
+1- in command line:
+
+	npm i debug
+
+2- in index.js:
+
+	const startupDebugger = require('debug')('app:startup');	
+	const dbDebugger = require('debug')('app:database');
+
+	if(app.get(env) === 'development'){
+		startupDebugger('development environment ...');
+	}	 
+
+	// Database Work
+	...
+	
+	dbDebugger('Connected to database ...');
+
+3- to see debug messages that we set in cmd:
+
+	set DEBUG=app:startup
+	or
+	set DEBUG=app:database
+	or
+	set DEBUG=app:*
+
+4- to clear DEBUG variable: set DEBUG=
+	
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------- Templating Engines -------------------
+===============================================================================================================================
+
+
+
+Generate dynamic HTML at the server and send it to the client by templating engines in nodejs.
+
+populor templating engines:
+pug, mustache, ejs ...
+
+1- in cmd : npm i pug
+
+2- in index.js :
+
+	app.set('view engine', 'pug');
+	app.set('views', './views'); //default
+
+	app.get('/', (req,res) => {
+
+		res.render('index', { title: 'My express app', message: 'Hello...' });
+
+	})
+
+3- create 'views' folder and create 'index.pug' file
+
+4- in index.pug:
+
+	html
+		head
+			title= title
+		body
+			h1= message
+	
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------- Express Router -----------------------
+===============================================================================================================================
+
+
+1- We create a 'routes' directory and inside that for each route create a js file. for example routes > courses.js
+
+2- we put all of our created apis about that route to each file.
+
+3- in courses.js instead of 'app; object (const app = express()) we work with 'route' object:
+
+	const express  = require('express');
+	
+	const router = express.Router();
+
+     ->	router.get('/', (req, res) => { ... });
+
+	...
+		
+	module.exports = router;
+
+
+4- we can factor out the route url. in index.js file:
+
+	const app = express();
+	
+	const courses = require('/routes/courses');
+
+	...
+	
+     ->	app.use('/api/courses', courses);
+	
+	...
+
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------- Synchronous & Asynchronous ------------------
+===============================================================================================================================
+
+
+- Asynchronous or Non-Blocking ==> a single waiter for multiple tables: it take one order from one table and set it 
+	on kitchen desk for chefs to prepare the order and without delay goes to another table and takes their order
+	too.
+
+- Synchronous ==> a waiter take one order from one table and set it on kitchen desk and waits until the order is ready
+	then take the order for table one, then aftar that operation goes to table two for their order!  
+
+example:
+
+	setTimeout(() => { console.log('Reading a user from db ... ') },2000)
+
+
+==============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------- Callback Functions ----------------
+===============================================================================================================================
+
+
+- When the result of an Asynchronous operation is ready the 'Callback function' will be called with the result.
+
+	console.log('Before');
+
+	getUser(1, user => { 
+		console.log('User', user);
+	});
+
+	console.log('After');
+
+	function getUser(id, callback)
+		setTimeout(() => { 
+			console.log('Reading a user from db ... ');
+			callback({ id: id, gitHubUsername: 'Mosh' });
+		},2000);
+	}
+
+
+in the console we get:
+
+	Before
+	After
+	(witing 2 second)
+	Reading a user from db ...
+	User { id: 1, gitHubUsername: 'Mosh' }
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------- Promises -------------------
+===============================================================================================================================
+
+
+- A Promise is an object that holds the eventual result of an asynchronous operation. When an Asychronous operation completes
+	it can either result in a value or an error. A promise basically promises you that will give you the result of an 
+	asynchronous operation.
+
+- Promise States:
+
+	- 'Pending' => initially when we create a promise object. at this point it will kik off an asynchronous 
+		operation. 
+		
+	- 'Fulfilled' or 'Resolved' ==>  when the result is ready, the promise can either be 'Fulfilled' or 'Resolved' which 
+		basically means an asynchronous operation completed successfully, so then we will have a value.
+
+	- 'Rejected' ==> otherwise if sth go wrong during the execution of that asynchronous operation, our promise will be at the
+		'Rejected' state.
+
+
+- Anywhere that you have an asynchronous operation that takes a callback, you should modify that function to return a promise.
+
+	const p = new Promise((resolve, reject) => { 
+		
+		// Kick off some async work
+
+		// ...
+
+		setTimeout( ()=>{ 
+
+			resolve({id:1, name: 'daniel'}); // pending => resolved or fulfilled
+			
+			reject(new Error('some error occurred ...')); // pending => rejected
+		
+		 }, 2000);	
+	
+	});
+
+
+	p
+	  .then(result => console.log('Result', result)); // getting the result
+
+	  .catch(err => console.log('Error', err.message)); // getting the error
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+
+- Parallel Promises:
+
+	const p1 = new Promise((resolve) => {
+		
+		setTimeout(()=>{
+			cosole.log('Asyncronous operation 1 ...');
+			resolve(1);
+		},2000);
+	});
+
+	const p2 = new Promise((resolve) => {
+		
+		setTimeout(()=>{
+			cosole.log('Asyncronous operation 2 ...');
+			resolve(2);
+		},2000);
+	});
+
+
+	Promise.all([p1, p2])
+		.then(result => console.log(result))  // we get '{1, 2}'
+		.catch(err => console.log('Error', err.message));
+
+- Race Promises:
+
+	instead of Promise.all() ==> we use Promise.race() and we get the answer based on fastest successful operation // 1
+
+
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------- Async & Await -----------
+===============================================================================================================================
+
+
+- Async & Await helps you write asynchronous code like synchronous code !
+
+
+	async function getRepositoris() {
+	
+		try{
+			const user = await getUser(1);
+			const repos = await getRepos(user);
+			console.log(repos);
+
+		} catch (err) {
+			console.log('Error', err.message);
+		}
+
+	}
+
+	getRepositories();
+
+
+
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------- MongoDB & Mongoose -------
+-------------------------------------------------------------------------------------------------------------------------------
+===============================================================================================================================
+===============================================================================================================================
+===============================================================================================================================
+
+
+
+- in command line:
+
+	npm i mongoose
+
+
+- To create a class we use pascal notation (first letter of first word is upercase) => const Product = ...
+
+- To create an object we use camel notation (first letter of first word is lowercase) => const product = ...
+
+
+- in api.js :
+
+	const mongoose = require("mongoose");
+
+
+	// Create a connection
+
+	mongoose
+  		.connect("mongodb://localhost/store-manager")
+  		.then(() => console.log("Connected to MongoDB ..."))
+  		.catch(err => console.error("Could not connect to MongoDB ..."));
+
+	// Create a schema for our collection
+
+	const productSchema = mongoose.Schema({
+
+  		img: String,
+
+  		imgs: [String],
+
+  		proCode: Number,
+
+  		name: String,
+
+  		created: { type: Date, default: Date.now }
+
+	});
+
+	
+	// Create a model of our schema
+
+	const Course = mongoose.model('Product', productSchema);
+
+	
+	
+
+	async function createCourse(){
+		
+		// Create an object instance of our model class for new document
+
+		const course = new Course({
+		
+			img: 'product1.jpg',
+		
+			imgs: [ 'product1-img2', 'product1-img3'],
+
+			proCode: 18654,
+	
+			name: 'Product #1'
+		
+		});
+
+		// insert our document to our collection ih database
+
+		const result = await course.save();
+
+		console.log(result);
+
+	}
+
+	createCourse();
+
+
+
+- after we created a connection to our mongoDB and created a schema of our collection, then we need to compile that into 
+
+	a model which gives us a class, next we can create an object based on our class, and this object maps to a document
+
+	in a mongoDB database.
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- to 'query' products collection:
+
+	
+	async function getProducts(){
+		
+		const products = await Course
+	
+			.find({img:'product.jpg', name: 'Product #1'}) // filter them by specific details
+					
+			.limit(10)
+
+			.sort({name: -1}) // 1 => asc,  -1 => desc
+
+			.select({name: 1, img: 1}); // select specefic features
+
+		console.log(products);
+
+			
+	}
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- to use 'comparison operators' in query a collection in mongoDB:
+
+	eq => (equal)
+
+	ne => (not equal)
+
+	gt => (greater than)
+
+	gte => (greater than or equal to)
+
+	lt => (less than)
+
+	lte => (less than or equal to)
+
+	in
+	
+	nin => (not in)
+
+
+	example:
+
+		const products = new Product
+		
+			.find({ price: { $gte: 10000, $lte: 20000 } }) // find products with a price between greater than or equal 
+									// to 10000 and also less than or equal to 20000
+		or
+			
+			.find({ price: { $in: [10000,20000,30000] } }) // find products with a price either 10000,20000 or 30000
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- 'logical' query operators:
+
+	or
+	and
+
+
+	example:
+		
+		const products = new Product
+
+			.find()
+
+			.or( [ { name: 'Product #1' }, { img: 'sth.jpg' } ] )
+
+
+		or
+			
+			.and( [ { name: 'Product #1' }, { img: 'sth.jpg' } ] )
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Regular expressions:
+
+	example:
+
+		const products = new Product
+
+			// name starts with 'product'
+
+			.find( { name: /^product/i } ) // i ==> this means case insesitive. no difference between P & p
+
+
+			// name ends with 'product'
+
+			.find( { name: /product$/i } )
+
+
+			// name contains 'product'
+
+			.find( { name: /.*product.*/i } )
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Count => we can get the number of products in our collection instead of their property
+
+	
+	example: 
+		
+		const products = new Product
+
+			.find()
+			.count();
+
+
+
+- Pagination => get documents for a given page
+
+	example:
+
+		const pageNumber = get from api request ...
+		const pageSize = get from api request ...
+		
+		const products = await Course
+	
+			.find({ category: 'sth' }) 
+
+			.skip((pageNumber - 1) * pageSize)
+					
+			.limit(pageSize)
+
+			.sort({ name: 1 }) // we can rewrite this => .sort('name') and for desc order => .sort('-name')
+
+			.select({ name: 1, img: 1 }); // we can rewrite this => .select('name img')
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+	
+- Updating existing documents:
+
+
+	method 1 => find the document and then update it
+
+
+		async function updateCourse(id){
+
+			const course = await Course.findById(id);
+		
+			if(!course) return;
+
+		
+			// method 1		
+
+			course.isPublished = true;
+		
+			course.author = 'Daniel Daneshi'
+
+	
+			// method 2
+
+			course.set({ 
+			
+				isPublished: true,
+
+				author: 'Daniel Daneshi'
+			
+			})
+
+			const result = await course.save();
+		
+			console.log(result);
+		}
+
+
+
+	method 2 => update the document directly
+
+
+		async function updateCourse(id){
+
+			const result = await Course.update( { _id: id }, {
+				
+				$set: {
+
+					author: 'Daniel',
+					isPublished: false
+				}
+			
+			});
+
+			console.log(result)
+
+		}
+
+
+	method 3 => update the document directly and give back the updated document
+
+	
+		
+		async function updateCourse(id){
+
+			const course = await Course.findByIdAndUpdate(id, {
+				
+				$set: {
+
+					author: 'Daniel',
+					isPublished: false
+				}
+			
+			}, { new: true});
+
+			console.log(course); 
+
+		}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+- Deleting documents:
+
+	
+	method 1 => delete the document and get deleted document
+
+		
+		async function removeCourse(id){
+
+			const course = await Course.findByIdAndRemove(id);
+
+			console.log(course); 
+
+		}
+	
+
+	method 2 => delete one document and return the result
+
+
+
+		async function removeCourse(id){
+
+			const result = await Course.deleteOne({ _id: id });
+
+			console.log(result); 
+
+		}
+
+
+
+	method 3 => delete many document and return the result
+
+
+
+		async function removeCourse(category){
+
+			const result = await Course.deleteMany({ category: category });
+
+			console.log(result); 
+
+		}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Validation in mongoose: we can set validation when defining a mongoose schema.
+
+	
+	const productSchema = mongoose.Schema({
+
+		// built-in validation		
+
+  		img: { type: String, required: true},
+
+  		imgs: [String],
+
+  		proCode: Number,
+
+		// built-in validation			
+
+  		name: { type: String, required: true, minlength: 5, maxlength: 255, match: /pattern/ },
+
+		// built-in validation	
+
+		category: { type: String, required: true, enum: ['book', 'audio', 'video']},
+
+		// custom validation	
+		
+		tags: { type: Array, 
+
+			validate: { 
+				validator: function(v){ return v & v.length > 0; },
+				message: ' tag is a must.'
+			}
+		 }
+	
+		isPublished: Boolean,
+
+		// Async validation	
+
+		secretCode: { type: String, 
+			      validate: { 
+				isAsync: true,
+				validator: function(v, callback){
+						setTimeout(()=>{
+							// Do some async work
+
+							const result = v && v.length > 14;
+
+							callback(result);	
+
+						  }, 4000);
+					     },
+
+				message: ' tag is a must.'
+			        }
+		   }
+	
+		// built-in validation			
+
+		price: { type: Number, min: 10, max: 200, required: function() { return this.isPublished; } },
+
+  		created: { type: Date, default: Date.now }
+
+	});
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+	
+
+- Validation Errors: we can get validation errors when we try and catch an operation to database
+
+
+	async function createProduct(item){
+
+		...
+
+		try{
+		
+		} catch (ex) { 
+			for (field in ex.errors)
+				console.log(ex.errors[field].message); 
+
+				// we have other errors properties like 'errors[field].kind', 'errors[field].name',
+			       // 'errors[field].path', 'errors[field].value', 'errors[field].properties' ...
+		}
+		
+	}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+- SchemaType Options:
+		
+		const productSchema = mongoose.Schema({
+
+  			name: { type: String, lowercase: true } ==> // mongoose convert the name to lowercase automatically
+					    
+					    // upercase : true
+					   // trim : true  ==> remove the padding around our text
+
+			price: { type: Number, get: v => Math.round(v), set: v => Math.round(v) }
+
+						// get is called when we read this price from the database
+					       // set is called when we add new item to database
+	
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+- Modeling Relationships : It is a trade off between 'Query Performance' and 'Consistency'
+
+	
+	** method 1: Using references (Normalization) -> Consistency
+
+	
+		let author = {
+
+			name: 'Mosh'
+		}
+
+		let course = {
+	
+			author: 'id'
+		}
+
+
+
+	** method 2: Using embedded documents (Denormalization) -> Performance
+
+
+		let course = {
+
+			author: {
+				
+				name: 'Mosh Hamedani'
+			}
+		}
+
+
+
+	** method 3: Hybrid -> using a snapshot of other document inside the collection
+
+
+		let author = {
+			
+			name: 'Mosh'
+
+			// 50 other properties
+		}
+
+		let course = {
+
+			author:{
+
+				id: 'ref',
+
+				name: 'Mosh'
+			}
+		}
+
+
+
+
+
+
+- Reference example (Population):
+
+
+
+	const Course = mongoose.model('Course', new mongoose.Schema({
+
+		name: String,
+
+		author: {
+
+			type: mongoose.Schema.Types.ObjectId,
+
+			ref: 'Author'
+		},
+				
+		category: {
+			
+			type: mongoose.Schema.Types.ObjectId,
+
+			ref: 'Category'
+		
+		}
+	}));
+
+
+	async function listCourses(){
+
+		const courses = await Course
+
+			.find()
+
+			.populate('author', 'name -_id')
+
+			.populate('category', 'name')
+
+			.select('name author')
+
+	}
+
+
+
+
+- Embedding example:
+
+	
+	const authorSchema = new mongoose.Schema({ 
+
+		name: String,
+		
+		bio: String,
+
+		website: String
+
+	})
+
+
+	const Author = mongoose.model('Author', authorSchema);
+
+	const Course = mongoose.model('Course', new mongoose.Schema({
+
+		name: String,
+
+		author: authorSchema
+	
+	}))
+
+
+
+
+
+- Array of sub-documents:
+
+
+	const Course = mongoose.model('Course', new mongoose.Schema({
+
+		name: String,
+
+		authors: [authorSchema]
+	
+	}))
+
+
+
+	async function createCourse(name, authors){
+
+		const course = new Course({
+
+			name,
+			
+			authors		
+
+		});
+
+		const result = await course.save();
+
+		console.log(result)
+
+	}
+
+	
+
+	async function addAuthor( courseId, author){
+
+		const course = await Course.findById(courseId);
+
+		course.authors.push(author);
+
+		course.save();
+	}
+
+
+
+	async function removeAuthor( courseId, authorId){
+
+		const course = await Course.findById(courseId);
+
+		const author = course.authors.id(authorId);
+
+		author.remove();
+
+		course.save();
+	}
+
+
+
+
+run ->	createCourse('Node Course', [
+
+		new Author({ name: 'Mosh' }),
+
+		new Author({ name: 'John' })
+
+	]);
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+- Transaction in mongoDB by fawn
+
+
+	npm i fawn
+	...
+	
+
+	const mongoose = require('mongoose');
+
+	const Fawn = require('fawn');
+
+	Fawn.init(mongoose);
+
+	...
+
+
+	try{
+
+		new Fawn.Task()
+	
+		    .save('rentals', rental)  // first argument is the name of the collection
+
+		    .update('movies', { _id: movie._id }, {
+
+			  $inc : { numberInStock: -1}
+		    })
+
+		    .run();
+
+		
+		res.send(rental);
+
+
+	} catch(ex) {
+
+		res.status(500).send('internal server error. sth failed...');
+
+		console.log(ex.message);
+	}
+	
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+- ObjectId
+
+	const mongoose = require('mongoose');
+
+	const id = new mongoose.Types.ObjectId();
+
+	console.log(id.getTimestamp());
+
+	const isValid = mongoose.Types.ObjectId.isValid('1234');
+
+	console.log(isValid);
+
+
+===================================================================================================================================
+-----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- Single Responsibility Principle ---------
+===================================================================================================================================
+
+
+- In order to keep our application maintainable we should ensure that each module is responsible for only one thing. That is the single responsibility principle in practice. 
+
+
+
+===================================================================================================================================
+-----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- Information Expert Principle ---------
+===================================================================================================================================
+
+
+- In object-oriented programming we have a principle called 'Information Expert Principle', that mean an object that has enough information and is an expert in a given area, that object should be responsible for making decisions and performin tasks.
+
+for example the user model should be responsible for generating authentication token.
+
+
+
+===================================================================================================================================
+-----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- Authentication & Authorization ----------
+===================================================================================================================================
+
+
+- Authentication : is the process of identifying if the user is who they claim they are. That's when we login. So we send our username and password to the server, and the server authenticate us.
+
+- Authorization : is determining if the user has the right permission to perform a given operation
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Hashing Passwords: to hash a password we need a 'salt'. A salt is basically a random string that is added before or after the password, so the result of hash password will be different each time based on the salt that is used.
+
+
+- hashing using bcrypt:
+	
+	npm i bcrypt
+	------------------------------------------------------------- in 'users.js' route for creating users:
+	
+	const bcrypt = require("bcrypt");
+
+	....
+
+	const salt = await bcrypt.genSalt(10);
+  	user.password = await bcrypt.hash(user.password, salt);
+	
+	-------------------------------------------------------------- in 'auth.js' for login users:
+
+	const validPassword = bcrypt.compare(req.body.password, user.password);
+  	if (!validPassword) return res.status(400).send("Invalid username or password.");
+	
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Adding Authentication: after we check for username and password we give the user a json web token for accessing various pages on 
+	
+	website which needs logged in user for access.
+
+
+   JSON Web Token: it is basically a long string that identifies a user;
+
+
+	npm i jsonwebtoken
+	------------------------------------------------ in auth.js for login users
+
+	const jwt = require("jsonwebtoken");
+
+	...
+
+	const token = jwt.sign({ _id: user._id }, "jwtPrivateKey"); // using config: "jwtPrivateKey" ==> config.ge("jwtPrivateKey")
+	
+	res.send(token);
+
+	----------------------------------------------------------------
+	
+
+- You should never use your confidential information like admin passwords or JSON web token private keys in your code base, otherwise these information is visible to anyone who has access to your source code.
+
+
+- Use config module to store confidential info about your application in your environment variables. see 'Confuguration' section.
+
+
+- Based on "Information Expert Principle", the user model should be responsible for generating authentication token.
+
+- Typically we use arrow functions for stand alone functions. if we want create a method that is part of an object, you should not use an arrow function.
+
+ 
+        -------------------------------------------- in user.js model:
+
+	userSchema.methods.generateAuthToken = function(){
+
+		const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+		return token;
+
+	}
+
+        ------------------------------------------- in auth.js and users.js
+
+	const token = user.generateAuthToken();
+
+	res.send(token);
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Adding Headers in response request:
+
+	const token = user.generateAuthToken();
+
+  	res.header("x-auth-token", token).send(_.pick(user, ["_id", "name", "username"]));
+
+
+- Getting Headers in a request:
+
+	const token = req.header('x-auth-token');
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+- Logging Out a user:
+
+	Because we are not storing the JSON Web Token for each user anywhere on the server so we don't need a seperate route handler 
+	to delete this token. so we need to implement the login out feature on the client side not on the server. So on client side 		when the user want to log out we simply delete the token.
+
+	This is a very bad practice store these tokens in database, because these tokens are like keys that give a client access
+	to protected api endpoints. If a hacker can get access to your database, they can see all these tokens for authenticated
+	users.They don't even need to know the password of a user, they simply get their authentication token and send it to the 
+	server to execute requests on behalf of a user, so you should notstore tokens in your database. But if you know what you 
+	are doing, make sure to encrypt it (hash it) before saving it into database.
+
+	So as a security best practice do not store tokens in database and whenever you sending a token from a client to a server
+	make sure you are using https protocol.
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+- Adding Authorization: Some operation like deleting an item should only be available to admin users. With Authorization we give
+
+	access to users for some endpoints.
+
+
+1- First we create a folder "middleware" and then create two files "admin.js" and "auth.js"
+
+2- in user.js model we add 'isAdmin: Boolean' to our userSchema and also to our generateAuthToken method:
+
+	-------------------------------------------------------------------
+
+	userSchema.methods.generateAuthToken = function(){
+
+		const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
+		return token;
+
+	}
+
+	-------------------------------------------------------------------
+
+
+3- in auth.js:
+
+	--------------------------------------------------------------------
+
+	const jwt = require("jsonwebtoken");
+
+	const config = require("config");
+
+	module.exports = function(req, res, next) {
+
+  		const token = req.header("x-auth-token");
+
+  		if (!token) return res.status(401).send("Access denied. No token proided.");
+
+  		try {
+    			const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
+   		 	req.user = decoded;
+    			next();
+  		} catch (ex) {
+    			return res.status(400).send("invalid token.");
+ 		 }
+	};
+
+	---------------------------------------------------------------------
+
+
+
+4- in admin.js:
+
+	---------------------------------------------------------------------
+
+	module.exports = function(req, res, next) {
+
+  		if (!req.user.isAdmin) return res.status(403).send("Access Forbidden!");
+
+  		next();
+
+	};
+
+	---------------------------------------------------------------------
+
+
+
+5- in our router apis we can use auth and admin middleware functions for authentication & authorization.
+
+	router.delete("/:id", [auth, admin], async (req, res) => {
+
+  		// delete operation
+	});
+
+
+
+
+===========================================================================================================================
+---------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------ Unit Testing -------------
+---------------------------------------------------------------------------------------------------------------------------
+===========================================================================================================================
+
+
+- what is automated testing?
+
+	The practice of writing code to test our code, and then run those tests in an automated fashion.
+
+	With automated testing our source code consist of production code (application code) and test code.
+
+	As your application grows in size and complexity the time require to manually test all the different pieces
+	
+	increases exponentially. so thats why we use automated testing.
+
+	With automated testing you write code and directly call your functions with different inputs and verify that this
+	
+	function returns the right output. Automated test are repeatable. You can rerun these tests every time you change
+	
+	your code, every time you commit your code to a repository and before deploying your application. 
+
+	You can write several hundreds or thouthands of automated tests for various parts of your application and run them
+	
+	all in just a few seconds.
+
+	
+- Benefits:
+
+	1- Test your code frequently, in less time
+
+	2- Catch the bugs before deploying
+
+	3- Deploy with confidence
+
+	4- Refactor with confidence 
+
+	5- Focus more on the quality
+
+
+- Refactoring: Changing the structure of the code without changing its behavior. If you extract a few lines of a
+		
+	method into a seperat private method. thats refactoring. if you rename a method thats refactoring too.
+	
+	you changing the structure of your code to make it cleaner and more maintainable, but you are not changing
+
+	the functionality.
+
+
+- When you don't have automated tests. Every time you refactor your code. You have to manually test every part of your 
+	
+	application that could be affected by your refactoring. This is very painfull because first of all it is time
+
+	consuming and second as your application grows. You may forget about parts that need to be tested. With automated
+
+	tests, every time you refactor your code, you run your tests and make sure you didn't break anything that use to 
+	
+	previously work.
+
+
+
+- Types of automated tests: 
+
+	1- Unit Tests
+
+	2- Integration Tests
+
+	3- End-to-End Tests
+
+
+- Unit Tests: 
+
+	Tests a unit of an application without its external dependencies, such as files, databases, message ques, web
+	services and so on. They are cheap to write and they execute fast. This way we can verify that each building block
+	in your application is working as expected. Since you are not testing these classes or components with their
+	external depencencies, you can't get a lot of confidence in the reliability of your application. Thats where 
+	integration test come to the rescue.
+
+- Integration Tests:
+
+	Tests the application (a class or a component or multiple classes) with its external dependencies. So it tests the 		integration of your application code with these concrete dependencies like files, databases and so on. These test
+	take longer to execute because they often involve reading or writing to a database. They give you more confidence
+	in the health of your application.
+
+- End-to-End Tests:
+
+	Drives an application through its user interface (UI). There are specific tools built for creating end-to-end
+	tests. One popular tool is Selenium which allows us to record the interaction of a user with our application and
+	then play it back and check if the application returning the right results or not. These tests give you the 
+	greatest amount of confidence about the health of your application, but they have two big problems. First they are
+	very slow. Because they are require the lunch of your application and testing it through the UI. So every test
+	going to lunch the application, potentially log in, navigate to an internal page, submit a form and expect a
+	result. Very slow! The second problem is that they are very brittle, because a small enhancement to the application
+	or a small change in the user interface can easily break these tests.
+
+
+
+						 /\
+						//\\
+					       //  \\
+					      //    \\
+					     //  B2B \\
+					    //========\\
+					   //          \\
+					  // Integration\\
+					 //              \\
+					//================\\
+				       //                  \\
+				      //                    \\
+				     //	     Unit Tests      \\
+				    //                        \\
+				   //                          \\
+				   ==============================
+				     
+
+-Test Pyramid => 
+
+	this pyramid argues that most of your tests should be in the category of unit tests. Because these 
+	tests are easy to write and they execute quickly. But since they don't give you much confidence about the health
+	of your application you should have a bunch of integration tests that tests the integration of your application 
+	code with its external dependencies. These tests provide many advantages of end to end tests but without the 
+	complexities of dealing with the user interface. And finally you should write few E2E tests for the key functions
+	of the application, but you should not test the H cases with these E2E tests. You only test the happy path and 
+	leave the H cases to a unit test
+
+	BUT
+
+	This is pyramid is just a guide line. It's not a hard and fast rule that you need to follow in every application.
+	The actual ratio between Unit, Integration and E2E tests depends on your project.
+
+
+	Unit tests are great for quickly testing the logic, like conditional statements and loops. If you have methods with
+	complex logic and calculations you should test them with unit tests.
+
+	Takeaways:
+	
+	1- Favour unit tests to e2e tests. because they are fastest to run and cheapest write they are very precice so
+		they can pin point exactly where sth fails.they give you rapid feedback. 
+
+	2- Cover unit test gaps with integration tests.
+
+	3- Use e2e tests sparingly. Only for thekey functions of your application
+
+
+- The number of unit tests you have for a given function should be greater than or equal to the number of execution paths.
+	With unit tests we wanna make sure that all the execution paths in a given function are covered. We are testing all
+	the logic throughlly.
+
+- Your tests should neigther be too specific, nor too general.
+
+- As a rule of thumb, use unit tests for testing functions with algorithms that have zero or minimal dependency to 		external resources. Trying to avoid making too many mocks. If you are doing too much mocking, its better to write
+	an integration test.
+
+
+- In order to unit test a function that directly or indirectly talks to an external resource we should use Integration
+	test, but if we want to test only the logic with the unit test, we can replace those references to
+ 	external functions with 'mock' functions (fake functions).
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Jest => a framework for unit testing.
+
+	npm i jest --save-dev
+
+
+- Go to package.json and set:
+
+	"scripts":{
+	
+		"test": "jest --watchAll"
+	}
+
+- run in terminal:
+
+	npm test
+
+
+- create a 'tests' directory and create files with the 'sth.test.js' ending name.
+
+- in sth.test.js:
+
+	const lib = require('../lib.js');
+
+
+	//Testing Numbers
+
+	describe('absolute func', () => {
+
+		// When testing floating numbers, we can not use 'toBe()' method, because of how floating numbers are
+	       //	stored in computers, instead we should use 'toBeCloseTo()'.
+	
+		it('Should return a positive number if the input is positive number', () => {
+			const result = lib.absolute(1);
+			expect(result).toBe(1);
+		});
+
+		it('Should return a positive number if the input is negative number', () => {
+			const result = lib.absolute(-1);
+			expect(result).toBe(1);
+		})
+
+		it('Should return 0 if the input is 0', () => {
+			const result = lib.absolute(0);
+			expect(result).toBe(0);
+		})
+	
+		// We also have 'toBeGreaterThan()', 'toBeLessThan()', 'toBeGreaterThanOrEqual()', 'toBeLessThanOrEqual()'
+	       //	'toEqual()', ....
+
+	})
+
+
+	// Testing Strings
+
+	describe('greet func', () => {
+
+		// When testing strings make sure your tests are not too specific.
+	
+		it('Should return the greeting message', () => {
+			const result = lib.greet('Daniel');
+			expect(result).toMatch(/Daniel/);  // Or expect(result).toContain('Daniel');
+		})
+	}
+
+
+	// Testing arrays
+
+	describe('getCurrencies func', () => {
+
+		// When testing arrays make sure your tests are neither too specific, nor too general.
+	
+		it('Should return supported currencies', () => {
+			
+			const result = lib.getCurrencies();
+
+			// Too general
+			
+			expect(result).toBeDefined();
+			expect(result).not.toBeNull();
+
+
+			// Too specific
+			
+			expect(result[0]).toBe('USD');
+			expect(result[1]).toBe('AUD');
+			expect(result[2]).toBe('EUR');
+			expect(result.length).toBe(3);
+
+
+			// Prper way
+
+			expect(result).toContain('USD');
+			expect(result).toContain('AUD');
+			expect(result).toContain('EUR');
+			
+
+			// Ideal Way
+
+			expect(result).toEqual(expect.arrayContaining(['USD', 'AUD', 'EUR']));
+		})
+	}
+
+
+
+	// Testing objects
+
+	describe('getProduct func', () => {
+
+		// When testing Objects make sure your tests are neither too specific, nor too general.
+
+		it('Should return the product with the given id', () => {
+			
+			const result = lib.getProduct(1);
+			
+			// Too specific
+	
+			expect(result).toEqual({ id: 1, price: 10}); //This works for objects with exact of 2 properties.
+			
+			// Proper way
+
+			expect(result).toMatchObject({ id: 1, price: 10}); //This works for objects with more than 2 props.
+
+			expect(result).toHaveProperty('id', 1);
+		
+		});
+	}
+
+
+	// Testing Exceptions
+
+	describe('registerUser func', () => {
+
+		// When testing Exceptions put your function inside the expect method with an arrow function.
+
+		it('Should throw if user is falsy', () => {
+			
+			// Null, undefined, NaN,  '', 0, false ===> these are all falsy in javascript
+		
+			const falsyArgs = [null, undefined, NaN, '', 0, false];
+
+			falsyArgs.forEach(a => {
+
+				expect(() => { lib.registerUser(a) }).toThrow();
+			})
+		
+		});
+
+		it('Should return a user object if valid username is passed', () => {
+
+			const result = lib.registerUser('mosh');
+			
+			expect(result).toMatchObject({ username: 'mosh'});
+
+			expect(result.id).toBeGreaterThan(0);
+		})
+	}
+
+	
+
+ 

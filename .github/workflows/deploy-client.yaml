@@ -4,19 +4,19 @@ on:
     branches:
       - master
     paths:
-      - 'client-app/**'
+      - 'client/**'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd client-app && docker build -t danieldotinc/client-app .
+      - run: cd client && docker build -t danieldotinc/client .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: docker push danieldotinc/client-app
+      - run: docker push danieldotinc/client
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
