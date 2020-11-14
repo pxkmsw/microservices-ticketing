@@ -6,6 +6,7 @@ import { newTicket } from '../routes/newTicket';
 import { updateTicket } from '../routes/updateTicket';
 import { getTicket } from '../routes/getTicket';
 import { getTickets } from '../routes/getTickets';
+import { deleteTicket } from '../routes/deleteTicket';
 
 const routing = (app: any) => {
   app.set('trust proxy', true);
@@ -17,6 +18,7 @@ const routing = (app: any) => {
   app.use('/api/tickets', getTickets);
   app.use('/api/tickets', newTicket);
   app.use('/api/tickets', updateTicket);
+  app.use('/api/tickets', deleteTicket);
 
   app.use('*', notFound);
   app.use(errorHandler);
