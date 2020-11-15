@@ -6,12 +6,12 @@ const Header = ({ currentUser }) => {
     !currentUser && { label: 'sign-up', href: '/signup' },
     !currentUser && { label: 'sign-in', href: '/signin' },
     currentUser && { label: 'sign-out', href: '/signout' },
-    currentUser && { label: 'New Ticket', href: '/new-ticket' },
+    currentUser && { label: 'Create Ticket', href: '/new-ticket' },
     { label: 'Tickets', href: '/tickets' },
   ]
     .filter(linkConfig => linkConfig)
     .map(({ label, href }) => (
-      <li key={href} className="nav-item">
+      <li key={href} className="nav-item border border-primary shadow p-3 mb-5 bg-white rounded">
         <NavLink to={href} className="nav-link">
           {label}
         </NavLink>

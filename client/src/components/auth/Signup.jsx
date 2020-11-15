@@ -10,7 +10,7 @@ const Signup = () => {
     event.preventDefault();
     try {
       await await register({ email, password });
-      window.location = '/Dashboard';
+      window.location = '/dashboard';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errObj = {};
