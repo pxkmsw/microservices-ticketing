@@ -18,7 +18,7 @@ const EditTicket = () => {
     event.preventDefault();
     try {
       await updateTicket(ticket);
-      window.location = '/Dashboard';
+      window.location = '/tickets';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errObj = {};

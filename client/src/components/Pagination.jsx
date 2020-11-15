@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-const Pagination = ({ numOfItems, pageSize, currentPage, onPageChange }) => {
-  const pagesCount = Math.ceil(numOfItems / pageSize);
+const Pagination = ({ data: { count, pageSize, currentPage }, onEvent: { onPage } }) => {
+  const pagesCount = Math.ceil(count / pageSize);
   if (pagesCount == 1) return null;
 
   const pages = _.range(1, pagesCount + 1);
@@ -12,7 +12,7 @@ const Pagination = ({ numOfItems, pageSize, currentPage, onPageChange }) => {
         <li
           className={`page-item`}
           style={{ cursor: 'pointer' }}
-          onClick={currentPage == 1 ? () => '' : () => onPageChange('previous')}
+          onClick={currentPage == 1 ? () => '' : () => onPage('previous')}
         >
           <a className={`page-link ${currentPage == 1 ? 'text-secondary' : ''}`}>previous</a>
         </li>
@@ -24,11 +24,9 @@ const Pagination = ({ numOfItems, pageSize, currentPage, onPageChange }) => {
         <li
           className={`page-item`}
           style={{ cursor: 'pointer' }}
-          onClick={currentPage == pages.length ? () => '' : () => onPageChange('next')}
+          onClick={currentPage == pages.length ? () => '' : () => onPage('next')}
         >
-          <a className={`page-link ${currentPage == pages.length ? 'text-secondary' : ''}`}>
-            next
-          </a>
+          <a className={`page-link ${currentPage == pages.length ? 'text-secondary' : ''}`}>next</a>
         </li>
       </ul>
     </nav>

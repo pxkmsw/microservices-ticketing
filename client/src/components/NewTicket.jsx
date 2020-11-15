@@ -9,7 +9,7 @@ const NewTicket = () => {
     event.preventDefault();
     try {
       await createTicket(ticket);
-      window.location = '/Dashboard';
+      window.location = '/tickets';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errObj = {};

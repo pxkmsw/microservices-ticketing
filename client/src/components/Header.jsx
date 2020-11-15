@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 const Header = ({ currentUser }) => {
   const links = [
-    !currentUser && { label: 'Sign-up', href: '/Signup' },
-    !currentUser && { label: 'Sign-in', href: '/Signin' },
-    currentUser && { label: 'Sign-out', href: '/Signout' },
-    { label: 'New Ticket', href: '/New-Ticket' },
+    !currentUser && { label: 'sign-up', href: '/signup' },
+    !currentUser && { label: 'sign-in', href: '/signin' },
+    currentUser && { label: 'sign-out', href: '/signout' },
+    currentUser && { label: 'New Ticket', href: '/new-ticket' },
+    { label: 'Tickets', href: '/tickets' },
   ]
     .filter(linkConfig => linkConfig)
     .map(({ label, href }) => (

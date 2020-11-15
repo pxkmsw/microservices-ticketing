@@ -1,9 +1,16 @@
-import Dashboard from './components/Dashboard';
+import EditTicket from './components/EditTicket';
+import NewTicket from './components/NewTicket';
+
 const routes = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/new-ticket',
+    name: 'New Ticket',
+    component: NewTicket,
+  },
+  {
+    path: '/edit-ticket/:id',
+    name: 'Edit Ticket',
+    component: EditTicket,
   },
 ];
 

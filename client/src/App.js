@@ -8,14 +8,13 @@ import './App.css';
 import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
 import Signout from './components/auth/Signout';
-import NewTicket from './components/NewTicket';
-import EditTicket from './components/EditTicket';
+import Tickets from './components/Tickets';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
 
 import Bugs0 from './components/redux/withoutReactReduxLib/Bugs0';
-import Bugs1 from './components/redux/reactReduxClass/Bugs1';
 import Bugs2 from './components/redux/reactReduxFunc/Bugs2';
+import Bugs1 from './components/redux/reactReduxClass/Bugs1';
 
 class App extends Component {
   render() {
@@ -25,17 +24,19 @@ class App extends Component {
       <div className="App">
         <Header currentUser={user} />
         <Switch>
-          {/* {routes.map((prop, key) => {
-            return <ProtectedRoute key={key} component={prop.component} />;
-          })} */}
-          <Route path="/Dashboard" component={Dashboard} />
-          <Route path="/Bugs" component={Bugs2} />
-          <Route path="/Signin" component={Signin} />
-          <Route path="/Signup" component={Signup} />
-          <Route path="/Signout" component={Signout} />
-          <Route path="/New-Ticket" component={NewTicket} />
-          <Route path="/Edit-Ticket/:id" component={EditTicket} />
-          <Redirect from="/" to="/Dashboard" />
+          {routes.map(({ component, path }, key) => (
+            <ProtectedRoute key={key} component={component} path={path} />
+          ))}
+
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/tickets" component={Tickets} />
+          <Route path="/bugs" component={Bugs2} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signout" component={Signout} />
+          <Route path="/signout" component={Signout} />
+
+          <Redirect from="/" to="/dashboard" />
         </Switch>
       </div>
     );
