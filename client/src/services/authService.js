@@ -11,6 +11,11 @@ export async function login(user) {
   localStorage.setItem(keyToken, jwt);
 }
 
+export async function register(user) {
+  const { data: jwt } = await http.post('/api/users/signup', user);
+  localStorage.setItem(keyToken, jwt);
+}
+
 export function loginWithJwt(jwt) {
   localStorage.setItem(keyToken, jwt);
 }

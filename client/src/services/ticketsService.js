@@ -16,15 +16,23 @@ let tickets = [
   { id: 12, title: 'Easter Party', price: 89 },
   { id: 13, title: 'Union Day Concert', price: 49 },
 ];
-//getTicke
+//getT
 export async function getTickets() {
   return http.get(apiEndPoint);
   // return { data: tickets };
 }
 
+export async function getTicket(id) {
+  return http.get(`${apiEndPoint}/${id}`);
+}
+
 export async function createTicket(ticket) {
   return http.post(apiEndPoint, ticket);
   // tickets.push(ticket);
+}
+
+export async function updateTicket(ticket) {
+  return http.put(`${apiEndPoint}/${ticket.id}`, ticket);
 }
 
 export async function deleteTicket(id) {

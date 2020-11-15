@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "dev": "webpack-dev-server --mode development",
-    "build": "webpack --config webpack.config.js && cp -r dist/* public/",
+    "build": "webpack --config webpack.config.js && rm public/bundle.js && cp -r dist/* public/",
     "start": "npm run build && node src/server.js"
   },
   "keywords": [],
@@ -22,11 +22,11 @@
     "jwt-decoder": "0.0.0",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "react-hot-loader": "^4.3.11",
     "react-redux": "^7.2.1",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "uuid": "^3.3.2"
   },

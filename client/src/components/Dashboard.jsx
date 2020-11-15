@@ -47,7 +47,7 @@ const Dashboard = () => {
     await deleteTicket(id);
   };
 
-  const editTicket = id => console.log('edit ticket:', id);
+  const editTicket = id => (window.location = '/Edit-Ticket/' + id);
   const viewTicket = id => console.log('view ticket:', id);
   const buyTicket = id => console.log('buy ticket:', id);
 
@@ -57,12 +57,12 @@ const Dashboard = () => {
   const onSort = sortBy =>
     setSort({ order: sort.order == 'asc' ? 'desc' : 'asc', by: sortBy });
 
-  const sortedIcon = sortBy =>
-    sortBy == sort.by ? (
-      <i className={`fa fa-sort-${sort.order === 'asc' ? 'up' : 'down'}`} />
-    ) : (
-      ''
-    );
+  const sortedIcon = sortBy => {
+    let sortIcons = <i className={`fa fa-sort`} />;
+    if (sortBy == sort.by)
+      sortIcons = <i className={`fa fa-sort-${sort.order === 'asc' ? 'up' : 'down'}`} />;
+    return sortIcons;
+  };
 
   const handleSearch = searchStr => {
     if (searchStr != '') {
