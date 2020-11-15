@@ -11,7 +11,7 @@ const Header = ({ currentUser }) => {
   ]
     .filter(linkConfig => linkConfig)
     .map(({ label, href }) => (
-      <li key={href} className="nav-item border border-primary shadow ml-1 bg-white rounded">
+      <li key={href} className="nav-item">
         <NavLink to={href} className="nav-link">
           {label}
         </NavLink>
