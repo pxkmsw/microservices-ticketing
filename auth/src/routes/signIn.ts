@@ -12,7 +12,7 @@ router.post(
   '/',
   [
     body('email').isEmail().withMessage('Email must be valid.'),
-    body('password').trim().notEmpty().withMessage('You must supply a password.'),
+    body('password').trim().notEmpty().withMessage('You must provide a password.'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
